@@ -1,6 +1,0 @@
-// Executor Contract
-proxy_msg#3b6616c6 query_id:uint64 merkle_proof:^Cell response_address:MsgAddress = InternalMsgBody;
-
-evm_msg_to_tvm#0e50d313 query_id:uint64 merkle_proof:^Cell payload:^Cell response_address:MsgAddress = InternalMsgBody;
-
-evm_msg_to_tvm_error_notification#d3a4fb32 query_id:uint64 = InternalMsgBody;

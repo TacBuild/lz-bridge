@@ -1,6 +1,0 @@
-#include "stdlib.fc";
-
-builder store_offchain_prefix(builder b) inline {
-  return b.store_uint(1, 8);
-}
-
