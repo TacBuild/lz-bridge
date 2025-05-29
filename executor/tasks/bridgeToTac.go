@@ -55,7 +55,7 @@ func NewBridgeToTacTask() *BridgeToTacTask {
 		panic(err)
 	}
 
-	addr, err = address.ParseAddr(cfg.UsdtWalletAddress)
+	addr, err = address.ParseAddr(cfg.UsdtTacWalletAddress)
 	if err != nil {
 		panic(err)
 	}

@@ -9,7 +9,8 @@ import (
 type Config struct {
 	EthUsdtTreasuryAddress string `envconfig:"ETH_USDT_TREASURY_ADDRESS" required:"true"`
 	TacUsdtTreasuryAddress string `envconfig:"TAC_USDT_TREASURY_ADDRESS" required:"true"`
-	UsdtWalletAddress      string `envconfig:"USDT_WALLET_ADDRESS" required:"true"`
+	UsdtEthWalletAddress   string `envconfig:"USDT_ETH_WALLET_ADDRESS" required:"true"`
+	UsdtTacWalletAddress   string `envconfig:"USDT_TAC_WALLET_ADDRESS" required:"true"`
 	LiteServersConfig      string `envconfig:"LITE_SERVERS_CONFIG" required:"true"`
 	WalletMnemonic         string `envconfig:"WALLET_MNEMONIC" required:"true"`
 
