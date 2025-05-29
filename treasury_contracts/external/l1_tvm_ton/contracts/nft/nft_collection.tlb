@@ -1,0 +1,9 @@
+// Storage
+storage#_ owner_address:MsgAddress content:^Cell nft_item_code:^Cell original_address:Slice = Storage;
+
+// Incoming
+deploy_nft_item#fdba5d5f query_id:uint64 item_index:uint64 item_owner:MsgAddress amount:Coins nft_content:^Cell = InternalMsgBody;
+change_owner#3ac3e0ca query_id:uint64 new_owner:MsgAddress = InternalMsgBody;
+
+// Outgoing
+init#bd6ea770 query_id:uint64 item_owner:MsgAddress nft_content:^Cell = InitNFTItem;

@@ -1,0 +1,36 @@
+// CrossChainLayer Master Contract
+tvm_msg_to_evm#6c582059 query_id:uint64 operation_type:uint32 crosschain_ton_amount:(VarUInteger 16) response_address:MsgAddress payload:(Either Cell ^Cell) = InternalMsgBody;
+
+tvm_msg_to_evm_error_notification#ae7df95b query_id:uint64 operation_type:uint32 payload:(Either Cell ^Cell) = InternalMsgBody;
+
+executor_error_notification#cf6a5da4 query_id:uint64 payload:^Cell response_address:MsgAddress = InternalMsgBody;
+
+evm_msg_to_tvm#0e50d313 query_id:uint64 merkle_proof:^Cell payload:^Cell response_address:MsgAddress = InternalMsgBody;
+
+add_protocol_fee#48e660b5 query_id:uint64 = InternalMsgBody;
+
+update_merkle_root#23b05641 query_id:uint64 merkle_root:uint256 = InternalMsgBody;
+
+update_executor_code#4010d8fb query_id:uint64 new_code:^Cell = InternalMsgBody;
+
+change_sequencer_multisig_address#5cec6be0 query_id:uint64 admin_address:MsgAddress = InternalMsgBody;
+
+change_admin_address#581879bc query_id:uint64 admin_address:MsgAddress = InternalMsgBody;
+
+cancel_changing_admin_address#60094a1b query_id:uint64 = InternalMsgBody;
+
+confirm_changing_admin_address#6a4fbe34 query_id:uint64 = InternalMsgBody;
+
+update_code#20faec53 query_id:uint64 new_code:^Cell = InternalMsgBody;
+
+update_epoch_delay#e97250b7 query_id:uint64 new_epoch_delay:uint48 = InternalMsgBody;
+
+update_epoch_delay#e97250b7 query_id:uint64 new_epoch_delay:uint48 = InternalMsgBody;
+
+update_ton_protocol_fee#063199b7 query_id:uint64 ton_protocol_fee:(VarUInteger 16) = InternalMsgBody;
+
+update_tac_protocol_fee#3531465c query_id:uint64 tac_protocol_fee:(VarUInteger 16) = InternalMsgBody;
+
+collect_protocol_fee#1f95f86c query_id:uint64 = InternalMsgBody;
+
+collect_protocol_fee_notification#f358b6d0 query_id:uint64 protocol_fee_supply:(VarUInteger 16) = InternalMsgBody;

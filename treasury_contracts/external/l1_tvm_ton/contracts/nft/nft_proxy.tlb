@@ -1,0 +1,11 @@
+// Storage
+storage#_ ccl_address:MsgAddress = Storage;
+
+// Incoming
+error_notification#05138d91 query_id:uint64 operation:uint32 nft_item_address:MsgAddress owner:MsgAddress = InternalMsgBody;
+evm_msg_to_tvm_proxy#7817b330 query_id:uint64 nft_item_address:MsgAddress new_owner:MsgAddress forward_amount:Coins = InternalMsgBody;
+ownership_assigned#05138d91 query_id:uint64 nft_item_owner:MsgAddress payload:(Either Cell ^Cell) = InternalMsgBody;
+
+// Outgoing
+transfer#5fcc3d14 query_id:uint64 new_owner:MsgAddress response_destination:MsgAddress custom_payload:(Maybe ^Cell) forward_amount:Coins forward_payload:(Either Cell ^Cell) = TransferMessage;
+tvm_msg_to_evm#6c582059 query_id:uint64 operation:uint32 crosschain_ton_amount:Coins response_destination:MsgAddress nft_item_address:MsgAddress nft_item_owner:MsgAddress payload:(Either Cell ^Cell) = TVMMsgToEVMMessage;

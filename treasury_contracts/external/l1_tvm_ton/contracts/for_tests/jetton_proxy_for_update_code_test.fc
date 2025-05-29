@@ -1,0 +1,40 @@
+;; =============== CrossChainLayer Jetton Proxy Contract =====================
+
+#include "../imports/stdlib.fc";
+#pragma version >=0.4.0;
+
+
+;; =============== CONSTS =============================
+
+global slice ccl_address;
+global slice admin_address;
+global slice new_admin_address;
+
+
+;; =============== STORAGE =============================
+
+() load_data() impure inline {
+    slice ds = get_data().begin_parse();
+    ccl_address = ds~load_msg_addr();
+    admin_address = ds~load_msg_addr();
+    new_admin_address = ds~load_msg_addr();
+}
+
+
+;; =============== RECV =============================
+
+() recv_internal(int my_balance, int msg_value, cell in_msg_full, slice in_msg_body) impure {
+    return ();
+}
+
+
+;; =============== GETTERS =============================
+
+(_) get_full_data() method_id {
+    load_data();
+    return (
+        ccl_address,
+        admin_address,
+        new_admin_address
+    );
+}

@@ -1,0 +1,22 @@
+#include "../imports/stdlib.fc";
+
+#pragma version >=0.4.0;
+
+;; globals
+global slice ccl_address;
+global slice admin_address;
+
+() load_data() impure inline {
+    slice ds = get_data().begin_parse();
+    ccl_address = ds~load_msg_addr();
+    admin_address = ds~load_msg_addr();
+}
+
+() recv_internal(int my_balance, int msg_value, cell in_msg_full, slice in_msg_body) impure {
+    throw(ERROR::UNKNOWN_OP);
+}
+
+(_) get_full_data() method_id {
+    load_data();
+    return (ccl_address, admin_address);
+}

@@ -1,0 +1,7 @@
+artifacts
+cache
+build
+node_modules
+
+addresses.json
+.env

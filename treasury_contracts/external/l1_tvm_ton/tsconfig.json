@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "target": "ES2020",
+        "outDir": "build",
+        "module": "commonjs",
+        "declaration": true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "strict": true,
+        "skipLibCheck": true
+    },
+    "include": ["wrappers/**/*", "tests/*", "scripts/*"],
+    "exclude": ["*node_modules/", "wrappers/*.compile.ts"]
+}

@@ -1,0 +1,30 @@
+#include "../stdlib.fc";
+
+const int MIN_NFT_ITEM_STORAGE_DURATION = 5 * 365 * 24 * 3600; ;; 5 years
+const int MIN_NFT_COLLECTION_STORAGE_DURATION = 365 * 24 * 3600; ;; 1 year
+
+const int NFT_ITEM_BITS = 1430; ;;[/tests/NFTCollection.spec.ts#NC-1.1]
+const int NFT_ITEM_CELLS = 5; ;;[/tests/NFTCollection.spec.ts#NC-1.1]
+
+const int NFT_ITEM_INITSTATE_BITS = 1328; ;;[/tests/NFTCollection.spec.ts#NC-1.1]
+const int NFT_ITEM_INITSTATE_CELLS = 5; ;;[/tests/NFTCollection.spec.ts#NC-1.1]
+
+const int NFT_COLLECTION_BITS = 4906; ;;[/tests/NFTCollection.spec.ts#NC-1.1]
+const int NFT_COLLECTION_CELLS = 18; ;;[/tests/NFTCollection.spec.ts#NC-1.1]
+
+
+int calculate_nft_item_min_storage_fee() inline {
+  return get_storage_fee(BASECHAIN, MIN_NFT_ITEM_STORAGE_DURATION, NFT_ITEM_BITS, NFT_ITEM_CELLS);
+}
+
+int calculate_nft_item_forward_init_state_overhead() inline {
+  return get_simple_forward_fee(BASECHAIN, NFT_ITEM_INITSTATE_BITS, NFT_ITEM_INITSTATE_CELLS);
+}
+
+int calculate_nft_collection_min_storage_fee() inline {
+  return get_storage_fee(BASECHAIN, MIN_NFT_COLLECTION_STORAGE_DURATION, NFT_COLLECTION_BITS, NFT_COLLECTION_CELLS);
+}
+
+const int NFT_HANDLE_ERROR_NOTIFICATION_GAS_CONSUMPTION = 4656; ;;[/tests/NFTItem.spec.ts#NI-6.1]
+const int NFT_BURN_GAS_CONSUMPTION = 11460; ;;[/tests/NFTItem.spec.ts#NI-3.1]
+const int NFT_TRANSFER_GAS_CONSUMPTION = 11740; ;;[/tests/NFTItem.spec.ts#NI-4.1]

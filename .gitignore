@@ -1,0 +1,4 @@
+.env
+treasure_contracts/external/l1_tvm_ton
+treasure_contracts/external/stablecoin-contract
+node_modules

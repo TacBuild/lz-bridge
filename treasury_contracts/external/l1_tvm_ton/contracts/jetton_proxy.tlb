@@ -1,0 +1,10 @@
+// CrossChainLayer Jetton Proxy Contract
+evm_msg_to_tvm_proxy#7817b330 query_id:uint64 destination_address:MsgAddress destination_msg_body:(Maybe ^Cell) = InternalMsgBody;
+
+tvm_msg_to_evm_error_notification#ae7df95b query_id:uint64 jetton_wallet_address:MsgAddress owner_address:MsgAddress received_amount:(VarUInteger 16) = InternalMsgBody;
+
+change_admin_address#581879bc query_id:uint64 admin_address:MsgAddress = InternalMsgBody;
+cancel_changing_admin_address#60094a1b query_id:uint64 = InternalMsgBody;
+confirm_changing_admin_address#6a4fbe34 query_id:uint64 = InternalMsgBody;
+
+update_code#20faec53 query_id:uint64 new_code:^Cell = InternalMsgBody;

@@ -1,0 +1,16 @@
+// Settings Contract
+
+// Storage
+settings_storage#_ mapping:^Cell admin_address:MsgAddress = SettingsStorage;
+
+// Incoming Messages
+set_value#245e9406 query_id:uint64 key:uint256 value:^Cell = InternalMsgBody;
+get_value#399685b8 query_id:uint64 key:uint256 = InternalMsgBody;
+change_admin_address#581879bc query_id:uint64 admin_address:MsgAdress = InternalMsgBody;
+cancel_changing_admin_address#60094a1b query_id:uint64 = InternalMsgBody;
+confirm_changing_admin_address#6a4fbe34 query_id:uint64 = InternalMsgBody;
+get_all#40148d4a query_id:uint64 = InternalMsgBody;
+
+// Outgoing Messages
+send_value#707a28d2 query_id:uint64 key:uint256 value:(Maybe ^Cell) = SendValue;
+send_all#cf03b318 settings:(Maybe ^Cell) = SendAll;

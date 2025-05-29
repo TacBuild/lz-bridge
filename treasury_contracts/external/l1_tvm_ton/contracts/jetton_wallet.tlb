@@ -1,0 +1,17 @@
+// Storage
+storage#_ balance:Coins owner_address:MsgAddress jetton_master_address:MsgAddress = Storage;
+
+// Common
+internal_transfer#178d4519 query_id:uint64 amount:Coins from:MsgAddress response_address:MsgAddress forward_ton_amount:Coins forward_payload:(Either Cell ^Cell) = InternalTransfer;
+
+// Incoming Messages
+transfer#f8a7ea5 query_id:uint64 amount:Coins destination:MsgAddress response_address:MsgAddress custom_payload:(Maybe ^Cell) forward_ton_amount:Coins forward_payload:(Either Cell ^Cell) = InternalMsgBody;
+_ msg:InternalTransfer = InternalMsgBody;
+burn#595f07bc query_id:uint64 amount:Coins response_address:MsgAddress custom_payload:(Maybe ^Cell) = InternalMsgBody;
+return_ton#054fa365 query_id:uint64 = InternalMsgBody;
+
+// Outgoing Messages
+_ msg:InternalTransfer = InternalTransferOutMessage;
+transfer_notification#7362d09c query_id:uint64 jetton_amount:Coins from_address:MsgAddress forward_payload:Any = TransferNotificationMessage;
+excesses#d53276db query_id:uint64 = ExcessesMessage;
+burn_notification#7bdd97de query_id:uint64 jetton_amount:Coins owner_address:MsgAddress receiver_address:MsgAddress forward_payload:(Maybe ^Cell) = BurnNotificationMessage;

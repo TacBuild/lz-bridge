@@ -1,0 +1,21 @@
+#include "../stdlib.fc";
+
+const int MIN_EXECUTOR_STORAGE_DURATION = 14 * 24 * 3600; ;; 14 days
+
+;;# Precompiled constants
+;;
+;;All of the contents are result of contract emulation tests
+;;
+;;The following numbers are obtained assuming empty cell as payload
+const int EXECUTOR_BITS = 1174; ;;[/tests/Executor.spec.ts#E-1.2]
+const int EXECUTOR_CELLS = 6; ;;[/tests/Executor.spec.ts#E-1.2]
+
+const int EXECUTOR_ERROR_EXECUTION_CHAIN_GAS_CONSUMPTION = 64783; ;;[/tests/SystemFlow.spec.ts#SF-2.7]
+
+int calculate_executor_min_storage_fee(cell payload) inline {
+  int initial_gas = gas_consumed();
+  (int payload_cells, int payload_bits, _) = compute_data_size(payload, 8192);
+  int size_counting_gas = gas_consumed() - initial_gas;
+
+  return get_compute_fee(BASECHAIN, size_counting_gas) + get_storage_fee(BASECHAIN, MIN_EXECUTOR_STORAGE_DURATION, EXECUTOR_BITS + payload_bits, EXECUTOR_CELLS + payload_cells);
+}

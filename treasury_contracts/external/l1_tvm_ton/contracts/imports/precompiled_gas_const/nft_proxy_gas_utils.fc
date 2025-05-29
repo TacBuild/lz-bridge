@@ -1,0 +1,38 @@
+#include "../stdlib.fc";
+#include "ccl_gas_utils.fc";
+#include "nft_gas_utils.fc";
+
+
+const int NFT_PROXY_BITS = 6566; ;;[/tests/NFTProxy.spec.ts#NP-1.1]
+const int NFT_PROXY_CELLS = 13; ;;[/tests/NFTProxy.spec.ts#NP-1.1]
+
+const int MIN_NFT_PROXY_STORAGE_DURATION = 365 * 24 * 3600; ;; 1 year
+
+const int ESTIMATED_NFT_ITEM_BITS = 9205; ;;[/tests/NFTItem.spec.ts#NI-1.1]
+const int ESTIMATED_NFT_ITEM_CELLS = 24; ;;[/tests/NFTItem.spec.ts#NI-1.1]
+
+int calculate_nft_proxy_min_storage_fee() inline {
+  return get_storage_fee(BASECHAIN, MIN_NFT_PROXY_STORAGE_DURATION, NFT_PROXY_BITS, NFT_PROXY_CELLS);
+}
+
+int calculate_estimated_nft_item_storage_fee() inline {
+  return get_storage_fee(BASECHAIN, MIN_NFT_ITEM_STORAGE_DURATION, ESTIMATED_NFT_ITEM_BITS, ESTIMATED_NFT_ITEM_CELLS);
+}
+
+const int NFT_PROXY_OWNERSHIP_ASSIGNED_GAS_CONSUMPTION = 7614; ;;[/tests/NFTProxy.spec.ts#NP-4.1]
+const int NFT_PROXY_ERROR_NOTIFICATION_GAS_CONSUMPTION = 4663; ;;[/tests/NFTProxy.spec.ts#NP-3.1]
+
+int calculate_proxy_tvm_msg_to_evm_fee(int fwd_fee, int crosschain_ton_amount, int protocol_fee, int tac_executors_fee, int ton_executors_fee) inline {
+  ;; proxy -> ccl -> log
+  ;; or
+  ;; proxy -> nft item -> nft owner
+  ;; or
+  ;; proxy -> ccl -> proxy -> nft item -> nft owner
+  return 4 * fwd_fee + crosschain_ton_amount + protocol_fee + tac_executors_fee + ton_executors_fee +
+    get_compute_fee(BASECHAIN, NFT_PROXY_OWNERSHIP_ASSIGNED_GAS_CONSUMPTION) +
+    get_compute_fee(BASECHAIN, TVM_MSG_TO_EVM_GAS_CONSUMPTION) +
+    get_compute_fee(BASECHAIN, NFT_PROXY_ERROR_NOTIFICATION_GAS_CONSUMPTION) +
+    get_compute_fee(BASECHAIN, NFT_TRANSFER_GAS_CONSUMPTION) +
+    calculate_estimated_nft_item_storage_fee() +
+    calculate_ccl_min_storage_fee();
+}
