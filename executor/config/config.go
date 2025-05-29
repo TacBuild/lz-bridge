@@ -7,10 +7,11 @@ import (
 )
 
 type Config struct {
-	UsdtTreasuryAddress string `envconfig:"USDT_TREASURY_ADDRESS" required:"true"`
-	UsdtWalletAddress   string `envconfig:"USDT_WALLET_ADDRESS" required:"true"`
-	LiteServersConfig   string `envconfig:"LITE_SERVERS_CONFIG" required:"true"`
-	WalletMnemonic      string `envconfig:"WALLET_MNEMONIC" required:"true"`
+	EthUsdtTreasuryAddress string `envconfig:"ETH_USDT_TREASURY_ADDRESS" required:"true"`
+	TacUsdtTreasuryAddress string `envconfig:"TAC_USDT_TREASURY_ADDRESS" required:"true"`
+	UsdtWalletAddress      string `envconfig:"USDT_WALLET_ADDRESS" required:"true"`
+	LiteServersConfig      string `envconfig:"LITE_SERVERS_CONFIG" required:"true"`
+	WalletMnemonic         string `envconfig:"WALLET_MNEMONIC" required:"true"`
 
 	MinBridgeAmount string `envconfig:"MIN_BRIDGE_AMOUNT" default:"100000000"`
 }

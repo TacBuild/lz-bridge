@@ -44,7 +44,7 @@ func NewBridgeToEthTask() *BridgeToEthTask {
 		panic(err)
 	}
 
-	addr, err := address.ParseAddr(cfg.UsdtTreasuryAddress)
+	addr, err := address.ParseAddr(cfg.EthUsdtTreasuryAddress)
 	if err != nil {
 		panic(err)
 	}
