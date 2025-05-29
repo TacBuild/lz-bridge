@@ -14,10 +14,14 @@ func main() {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	bridge := tasks.NewBridgeTask()
+	bridgeToTac := tasks.NewBridgeToTacTask()
+	bridgeToEth := tasks.NewBridgeToEthTask()
 
-	if err := bridge.Run(ctx); err != nil {
-		log.Printf("Initial run failed: %v", err)
+	if err := bridgeToTac.Run(ctx); err != nil {
+		log.Printf("Initial run ton->tac failed: %v", err)
+	}
+	if err := bridgeToEth.Run(ctx); err != nil {
+		log.Printf("Initial run ton->eth failed: %v", err)
 	}
 
 	ticker := time.NewTicker(10 * time.Minute)
@@ -30,8 +34,16 @@ func main() {
 			return
 
 		case <-ticker.C:
-			if err := bridge.Run(ctx); err != nil {
-				log.Printf("Task failed: %v", err)
+			if err := bridgeToTac.Run(ctx); err != nil {
+				log.Printf("Task ton->tac failed: %v", err)
+			} else {
+				log.Printf("ton->tac finished successfully")
+			}
+
+			if err := bridgeToEth.Run(ctx); err != nil {
+				log.Printf("Task ton->eth failed: %v", err)
+			} else {
+				log.Printf("ton->eth finished successfully")
 			}
 		}
 	}

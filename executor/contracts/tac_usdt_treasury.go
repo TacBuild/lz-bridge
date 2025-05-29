@@ -14,21 +14,21 @@ import (
 	"github.com/xssnick/tonutils-go/tvm/cell"
 )
 
-const USDT_TREASURY_BRIDGE uint64 = 0x2906ab02
+const USDT_TREASURY_BRIDGE_TO_TAC uint64 = 0x2906ab02
 
-type UsdtTreasuryContract struct {
+type TacUsdtTreasuryContract struct {
 	BaseContract
 }
 
-func NewUsdtTreasuryContract(api ton.APIClientWrapped, name string, address *address.Address) *UsdtTreasuryContract {
-	return &UsdtTreasuryContract{
+func NewTacUsdtTreasuryContract(api ton.APIClientWrapped, name string, address *address.Address) *TacUsdtTreasuryContract {
+	return &TacUsdtTreasuryContract{
 		BaseContract: *NewBaseContract(api, name, address),
 	}
 }
 
-func (c *UsdtTreasuryContract) GetData(
+func (c *TacUsdtTreasuryContract) GetData(
 	ctx context.Context,
-) (*entity.UsdtTreasuryData, error) {
+) (*entity.TacUsdtTreasuryData, error) {
 
 	result, err := c.view(
 		ctx,
@@ -91,7 +91,7 @@ func (c *UsdtTreasuryContract) GetData(
 		return nil, err
 	}
 
-	return &entity.UsdtTreasuryData{
+	return &entity.TacUsdtTreasuryData{
 		EVMData:                 evmData,
 		CCLJettonProxyAddress:   cclJettonProxyAddr,
 		JettonMasterAddress:     jettonMasterAddr,
@@ -104,9 +104,11 @@ func (c *UsdtTreasuryContract) GetData(
 	}, nil
 }
 
-func (c *UsdtTreasuryContract) TriggerBridge(ctx context.Context, sender *wallet.Wallet, amount *big.Int, value *big.Int) error {
+func (c *TacUsdtTreasuryContract) TriggerBridge(ctx context.Context, sender *wallet.Wallet, amount *big.Int, value *big.Int) error {
+	fmt.Println("trigger bridge ton->tac")
+
 	body := cell.BeginCell().
-		MustStoreUInt(USDT_TREASURY_BRIDGE, 32).
+		MustStoreUInt(USDT_TREASURY_BRIDGE_TO_TAC, 32).
 		MustStoreUInt(rand.Uint64(), 64).
 		MustStoreBigCoins(amount).
 		MustStoreMaybeRef(nil).
@@ -127,30 +129,9 @@ func (c *UsdtTreasuryContract) TriggerBridge(ctx context.Context, sender *wallet
 		return err
 	}
 
-	err = checkTVMTransactionSuccess(tx)
+	err = CheckTVMTransactionSuccess(tx)
 	if err != nil {
 		return err
-	}
-
-	return nil
-}
-
-const TVM_TX_STATUS_SUCCESS = 0
-
-func checkTVMTransactionSuccess(tx *tlb.Transaction) (err error) {
-	if tx == nil {
-		return fmt.Errorf("transaction is nil")
-	}
-
-	ordinaryTx, _ := tx.Description.(tlb.TransactionDescriptionOrdinary)
-
-	switch phase := ordinaryTx.ComputePhase.Phase.(type) {
-	case tlb.ComputePhaseVM:
-		if phase.Details.ExitCode != TVM_TX_STATUS_SUCCESS {
-			return fmt.Errorf("transaction failed with exit_code: %d", phase.Details.ExitCode)
-		}
-	case tlb.ComputePhaseSkipped:
-		return fmt.Errorf("compute phase skipped due to: %s", phase.Reason.Type)
 	}
 
 	return nil

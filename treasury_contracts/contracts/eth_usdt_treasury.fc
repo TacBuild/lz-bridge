@@ -145,6 +145,7 @@ global int treasury_fee;
         max_bridge_amount,
         native_fee,
         estimated_gas_cost,
+        jetton_transfer_gas_cost,
         treasury_fee
     );
 }

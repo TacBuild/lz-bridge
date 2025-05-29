@@ -7,7 +7,7 @@ import (
 	"github.com/xssnick/tonutils-go/tvm/cell"
 )
 
-type UsdtTreasuryData struct {
+type TacUsdtTreasuryData struct {
 	EVMData                 *cell.Cell       `json:"evmData"`
 	CCLJettonProxyAddress   *address.Address `json:"cclJettonProxyAddress"`
 	JettonMasterAddress     *address.Address `json:"jettonMasterAddress"`
@@ -19,7 +19,7 @@ type UsdtTreasuryData struct {
 	TreasuryFee             *big.Int         `json:"treasuryFee"`
 }
 
-func (u *UsdtTreasuryData) GetTONValue() *big.Int {
+func (u *TacUsdtTreasuryData) GetTONValue() *big.Int {
 	totalValue := new(big.Int)
 	totalValue.Add(totalValue, u.CCLProtocolFee)
 	totalValue.Add(totalValue, u.TACProtocolFee)

@@ -15,15 +15,15 @@ import (
 	"github.com/xssnick/tonutils-go/ton/wallet"
 )
 
-type BridgeTask struct {
-	UsdtTreasury    *contracts.UsdtTreasuryContract
+type BridgeToTacTask struct {
+	UsdtTreasury    *contracts.TacUsdtTreasuryContract
 	UsdtWallet      *contracts.UsdtWallet
 	ExecutorWallet  *wallet.Wallet
-	TreasuryData    *entity.UsdtTreasuryData
+	TreasuryData    *entity.TacUsdtTreasuryData
 	MinBridgeAmount *big.Int
 }
 
-func NewBridgeTask() *BridgeTask {
+func NewBridgeToTacTask() *BridgeToTacTask {
 	ctx := context.Background()
 
 	cfg, err := config.Load()
@@ -48,7 +48,7 @@ func NewBridgeTask() *BridgeTask {
 	if err != nil {
 		panic(err)
 	}
-	usdtTreasury := contracts.NewUsdtTreasuryContract(api, "USDT_TREASURY", addr)
+	usdtTreasury := contracts.NewTacUsdtTreasuryContract(api, "TAC_USDT_TREASURY", addr)
 
 	usdtTreasuryData, err := usdtTreasury.GetData(ctx)
 	if err != nil {
@@ -63,7 +63,7 @@ func NewBridgeTask() *BridgeTask {
 
 	minBridgeAmount, _ := new(big.Int).SetString(cfg.MinBridgeAmount, 10)
 
-	return &BridgeTask{
+	return &BridgeToTacTask{
 		UsdtTreasury:    usdtTreasury,
 		UsdtWallet:      usdtWallet,
 		ExecutorWallet:  wallet,
@@ -72,7 +72,7 @@ func NewBridgeTask() *BridgeTask {
 	}
 }
 
-func (t *BridgeTask) Run(ctx context.Context) error {
+func (t *BridgeToTacTask) Run(ctx context.Context) error {
 	// Get the balance of the USDT wallet
 	balance, err := t.UsdtWallet.GetBalance(ctx)
 	if err != nil {
