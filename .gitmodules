@@ -3,4 +3,4 @@
 	url = https://github.com/ton-blockchain/stablecoin-contract.git
 [submodule "treasury_contracts/external/l1_tvm_ton"]
 	path = treasury_contracts/external/l1_tvm_ton
-	url = git@gitlab.com:ton-app-chain/tac/lz-bridge/treasury_contracts/external/l1_tvm_ton.git
+	url = git@gitlab.com:ton-app-chain/tac/smart-contracts/l1_tvm_ton.git
