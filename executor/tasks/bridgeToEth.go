@@ -99,6 +99,8 @@ func (t *BridgeToEthTask) Run(ctx context.Context) error {
 	if neededValue.Cmp(minValue) < 0 {
 		neededValue = minValue
 	}
+	// for storage in case
+	neededValue.Add(neededValue, big.NewInt(5000000))
 
 	err = t.UsdtTreasury.TriggerBridge(ctx, t.ExecutorWallet, usdtBalance, neededValue)
 

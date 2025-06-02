@@ -7,6 +7,11 @@ import {
     TacUsdtTreasuryConfig, 
 } from '../wrappers/TacUsdtTreasury';
 
+import { 
+    EthUsdtTreasury, 
+    EthUsdtTreasuryConfig, 
+} from '../wrappers/EthUsdtTreasury';
+
 import { Librarian } from '../external/stablecoin-contract/wrappers/Librarian';
 
 import { JettonMinter, JettonMinterConfig, JettonMinterContent, jettonContentToCell } from '../external/stablecoin-contract/wrappers/JettonMinter';
@@ -30,7 +35,7 @@ function buildEvmDataCell(evmTargetAdress: string, gasLimit: number, evmValidExe
 
 export async function run(provider: NetworkProvider) {
     const adminAddress = 'EQDoF2OkxsI3gc5jAuxlqozN9H_SgEOUCopMa1yU4djLaXuL';
-    const cclJettonProxy = 'EQDOv-zO-QRDh7TM9fLmOvBlggY40HffrxGr91VPtgu1EG0p';
+    const cclJettonProxy = 'EQBwSHP1u0aMoPrGW0g4L_vS3yZuPoFGRKWzHZxCdHl6t8ac';
 
     const evmTargetAdress = "0x440E079445AA9586bf99971d5f57BF09E2B9A403";
     const gasLimit = 1000000;
@@ -65,7 +70,8 @@ export async function run(provider: NetworkProvider) {
 
     const code = {
         usdtJettonMinter: await compile('UsdtJettonMinter'),
-        usdtTreasury: await compile('UsdtTreasury'),
+        tacUsdtTreasury: await compile('TacUsdtTreasury'),
+        ethUsdtTreasury: await compile('EthUsdtTreasury'),
         usdtJettonWallet: usdtJettonWalletCode,
     };
 
@@ -85,8 +91,34 @@ export async function run(provider: NetworkProvider) {
     await provider.waitForDeploy(usdtJettonMinter.address);
     await sleep(5 * 1000);
 
-    console.log('deploying usdt treasury');
-    const usdtTreasuryConfig: UsdtTreasuryConfig = {
+    console.log('deploying ETH usdt treasury');
+    const ethUsdtTreasuryConfig: EthUsdtTreasuryConfig = {
+        jettonMaster: usdtJettonMinter.address,
+        jettonWalletCode: usdtJettonWalletCode,
+        oAppAddress: Address.parse(adminAddress), 
+        dstEvmAddress: BigInt("0x440E079445AA9586bf99971d5f57BF09E2B9A403"),
+        ethEid: 30101,
+        maxBridgeAmount: 1_000_000_000n,
+        nativeFee: 0.5,
+        estimatedGasCost: 0.5,
+        jettonTransferGasCost: 0.5,
+        treasuryFee: 0.5,
+    }
+
+    const ethUsdtTreasury = provider.open(EthUsdtTreasury.createFromConfig(ethUsdtTreasuryConfig, code.ethUsdtTreasury));
+    await ethUsdtTreasury.sendDeploy(provider.sender(), toNano('0.1'));
+    await provider.waitForDeploy(ethUsdtTreasury.address);
+    await sleep(5 * 1000);
+
+    // send mint to treasury
+    await usdtJettonMinter.sendMint(provider.sender(), ethUsdtTreasury.address, 1_000_000_000_000n, null, null, null, 0n, toNano('2'));
+    await sleep(5 * 1000);
+    const ethTtreasuryWallet = await usdtJettonMinter.getWalletAddress(ethUsdtTreasury.address);
+    await sleep(5 * 1000);
+    console.log('ETH usdt treasury wallet:', ethTtreasuryWallet.toString());
+
+    console.log('deploying TAC usdt treasury');
+    const tacUsdtTreasuryConfig: TacUsdtTreasuryConfig = {
         evmData: evmData,
         cclJettonProxy: Address.parse(cclJettonProxy),
         jettonMaster: usdtJettonMinter.address,
@@ -97,14 +129,15 @@ export async function run(provider: NetworkProvider) {
         jettonTransferTonAmount,
         treasuryFee,
     }
-    const usdtTreasury = provider.open(UsdtTreasury.createFromConfig(usdtTreasuryConfig, code.usdtTreasury));
-    await usdtTreasury.sendDeploy(provider.sender(), toNano('0.1'));
-    await provider.waitForDeploy(usdtTreasury.address);
+    const tacUsdtTreasury = provider.open(TacUsdtTreasury.createFromConfig(tacUsdtTreasuryConfig, code.tacUsdtTreasury));
+    await tacUsdtTreasury.sendDeploy(provider.sender(), toNano('0.1'));
+    await provider.waitForDeploy(tacUsdtTreasury.address);
     await sleep(5 * 1000);
 
     // send mint to treasury
-    await usdtJettonMinter.sendMint(provider.sender(), usdtTreasury.address, 1_000_000_000_000n, null, null, null, 0n, toNano('2'));
+    await usdtJettonMinter.sendMint(provider.sender(), tacUsdtTreasury.address, 1_000_000_000_000n, null, null, null, 0n, toNano('2'));
     await sleep(5 * 1000);
-    const usdtTtreasuryWallet = await usdtJettonMinter.getWalletAddress(usdtTreasury.address);
-    console.log('usdt treasury wallet:', usdtTtreasuryWallet.toString());
+    const usdtTtreasuryWallet = await usdtJettonMinter.getWalletAddress(tacUsdtTreasury.address);
+    console.log('TAC usdt treasury wallet:', usdtTtreasuryWallet.toString());
+
 }

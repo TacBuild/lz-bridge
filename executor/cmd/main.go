@@ -17,11 +17,18 @@ func main() {
 	bridgeToTac := tasks.NewBridgeToTacTask()
 	bridgeToEth := tasks.NewBridgeToEthTask()
 
-	if err := bridgeToTac.Run(ctx); err != nil {
-		log.Printf("Initial run ton->tac failed: %v", err)
-	}
+	// if err := bridgeToTac.Run(ctx); err != nil {
+	// 	log.Printf("Initial run ton->tac failed: %v", err)
+	// 	panic(err)
+	// } else {
+	// 	log.Printf("Initial run ton->tac executed successfully")
+	// }
+
 	if err := bridgeToEth.Run(ctx); err != nil {
 		log.Printf("Initial run ton->eth failed: %v", err)
+		panic(err)
+	} else {
+		log.Printf("Initial run ton->tac executed successfully")
 	}
 
 	ticker := time.NewTicker(10 * time.Minute)

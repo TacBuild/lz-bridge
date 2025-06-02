@@ -128,7 +128,6 @@ func (c *TacUsdtTreasuryContract) TriggerBridge(ctx context.Context, sender *wal
 	if err != nil {
 		return err
 	}
-
 	err = CheckTVMTransactionSuccess(tx)
 	if err != nil {
 		return err

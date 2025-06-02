@@ -74,19 +74,19 @@ func NewBridgeToTacTask() *BridgeToTacTask {
 
 func (t *BridgeToTacTask) Run(ctx context.Context) error {
 	// Get the balance of the USDT wallet
-	balance, err := t.UsdtWallet.GetBalance(ctx)
+	usdtBalance, err := t.UsdtWallet.GetBalance(ctx)
 	if err != nil {
 		return err
 	}
 
 	// Check if the balance is greater than the minimum bridge amount
-	if balance.Cmp(t.MinBridgeAmount) < 0 {
+	if usdtBalance.Cmp(t.MinBridgeAmount) < 0 {
 		return nil
 	}
 
 	// Execute the bridge operation
-	// err = t.UsdtTreasury.TriggerBridge(ctx, t.ExecutorWallet, balance, t.TreasuryData.GetTONValue())
-	err = t.UsdtTreasury.TriggerBridge(ctx, t.ExecutorWallet, balance, t.TreasuryData.GetTONValue())
+	err = t.UsdtTreasury.TriggerBridge(ctx, t.ExecutorWallet, usdtBalance, t.TreasuryData.GetTONValue())
+	// err = t.UsdtTreasury.TriggerBridge(ctx, t.ExecutorWallet, t.MinBridgeAmount, t.TreasuryData.GetTONValue())
 
 	return err
 }

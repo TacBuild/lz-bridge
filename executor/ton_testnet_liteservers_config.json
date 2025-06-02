@@ -1,113 +1,27 @@
 {
   "liteservers": [
     {
-      "ip": 822907680,
-      "port": 27842,
-      "provided":"Beavis",
+      "ip": 861495504,
+      "port": 21088,
       "id": {
         "@type": "pub.ed25519",
-        "key": "sU7QavX2F964iI9oToP9gffQpCQIoOLppeqL/pdPvpM="
+        "key": "DSf8sjHK5rnN1LfSiU589GLmvzX4pMyl3g8LeNzeKzU="
       }
     },
     {
-      "ip": -1468571697,
-      "port": 27787,
-      "provided":"Beavis",
+      "ip": -775898783,
+      "port": 37131,
       "id": {
         "@type": "pub.ed25519",
-        "key": "Y/QVf6G5VDiKTZOKitbFVm067WsuocTN8Vg036A4zGk="
+        "key": "+8c/vMTcxr/B0k4bvpMziSKxDrc1/ZE16pyyJwBnBb8="
       }
     },
     {
-      "ip": -1468575011,
-      "port": 51088,
-      "provided":"Beavis",
+      "ip": 1160362179,
+      "port": 2550,
       "id": {
         "@type": "pub.ed25519",
-        "key": "Sy5ghr3EahQd/1rDayzZXt5+inlfF+7kLfkZDJcU/ek="
-      }
-    },
-    {
-      "ip": 1844203537,
-      "port": 37537,
-      "provided":"Neo",
-      "id": {
-        "@type": "pub.ed25519",
-        "key": "K1F7zEe0ETf+SwkefLS56hJE8x42sjCVsBJJuaY7nEA="
-      }
-    },
-    {
-      "ip": 1844203589,
-      "port": 34411,
-      "provided":"Neo",
-      "id": {
-        "@type": "pub.ed25519",
-        "key": "pOpRRpIxDuMRm1qFUPpvVjD62vo8azkO0npw4FPcW/I="
-      }
-    },
-    {
-      "ip": 1047529523,
-      "port": 37649,
-      "provided":"Neo",
-      "id": {
-        "@type": "pub.ed25519",
-        "key": "pRf2sAa7d+Chl8gDclWOMtthtxjKnLYeAIzk869mMvA="
-      }
-    },
-    {
-      "ip": 1592601963,
-      "port": 13833,
-      "id": {
-        "@type": "pub.ed25519",
-        "key": "QpVqQiv1u3nCHuBR3cg3fT6NqaFLlnLGbEgtBRukDpU="
-      }
-    },
-    {
-      "ip": 1162057690,
-      "port": 35939,
-      "id": {
-        "@type": "pub.ed25519",
-        "key": "97y55AkdzXWyyVuOAn+WX6p66XTNs2hEGG0jFUOkCIo="
-      }
-    },
-    {
-      "ip": -1304477830,
-      "port": 20700,
-      "id": {
-        "@type": "pub.ed25519",
-        "key": "dGLlRRai3K9FGkI0dhABmFHMv+92QEVrvmTrFf5fbqA="
-      }
-    },
-    {
-      "ip": 1959453117,
-      "port": 20700,
-      "id": {
-        "@type": "pub.ed25519",
-        "key": "24RL7iVI20qcG+j//URfd/XFeEG9qtezW2wqaYQgVKw="
-      }
-    },
-    {
-      "ip": -809760973,
-      "port": 20700,
-      "id": {
-        "@type": "pub.ed25519",
-        "key": "vunMV7K35yPlTQPx/Fqk6s+4/h5lpcbP+ao0Cy3M2hw="
-      }
-    },
-    {
-      "ip": 1097633201,
-      "port": 17439,
-      "id": {
-        "@type": "pub.ed25519",
-        "key": "0MIADpLH4VQn+INHfm0FxGiuZZAA8JfTujRqQugkkA8="
-      }
-    },
-    {
-      "ip": 1091956407,
-      "port": 16351,
-      "id": {
-        "@type": "pub.ed25519",
-        "key": "Mf/JGvcWAvcrN3oheze8RF/ps6p7oL6ifrIzFmGQFQ8="
+        "key": "SoiYuN+wpec1jnZhYQBOQrFgCRFZu12ukl10SJAIskI="
       }
     }
   ],
@@ -295,9 +209,9 @@
     "init_block": {
       "workchain": -1,
       "shard": -9223372036854775808,
-      "seqno": 17908219,
-      "root_hash": "y6qWqhCnLgzWHjUFmXysaiOljuK5xVoCRMLzUwGInVM=",
-      "file_hash": "Y/GziXxwuYte0AM4WT7tTWsCx+6rcfLpGmRaEQwhUKI="
+      "seqno": 28307469,
+      "root_hash": "405mHtobLVusApftZbxzaN50RXJZErl1EKCnsozgcnc=",
+      "file_hash": "R74bgasNOii0bcT38lHSxit7xX+DftnsvcWLaij5xuY="
     },
     "hardforks": [
       {
