@@ -28,9 +28,7 @@ Two bridge directions are implemented:
 ### Design Considerations
 
 - The contract defines fixed and deliberately high values for `native_fee`, `estimated_gas_cost`, and `jetton_transfer_gas_cost` to ensure that no funds get stuck in case of incorrect fee estimation.
-- Users can optionally include additional fee data via the `add_fee` field if they wish to increase gas or forwarding fees.
-- The bridge does **not** use the `isRoundTrip` flag in this direction, as Ethereum does not support rollback mechanisms for LZ messages.
-- The executor is responsible for constructing the correct payload and managing resource sufficiency before triggering the message.
+- Executor can optionally include additional fee data via the `add_fee` field if they wish to increase gas or forwarding fees.
 
 ---
 
