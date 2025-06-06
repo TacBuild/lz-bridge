@@ -1,0 +1,8 @@
+bridge_usdt_to_eth#6e6c1865  query_id:uint64
+  usdt_amount:Coins
+  add_fee:(Maybe ^(
+    add_native_fee:Coins
+    add_estimated_gas_cost:Coins
+    add_jetton_transfer_gas_cost:Coins
+  ))
+= InternalMsgBody;

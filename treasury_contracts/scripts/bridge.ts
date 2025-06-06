@@ -116,6 +116,6 @@ export async function run(provider: NetworkProvider) {
       jettonWalletAddress,
       oAppAddress,
       dstEvm,
-      1_000_000n,
+      1_000n,
     );
 }

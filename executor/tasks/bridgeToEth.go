@@ -2,6 +2,7 @@ package tasks
 
 import (
 	"context"
+	"log"
 	"math/big"
 	"strings"
 
@@ -23,17 +24,12 @@ type BridgeToEthTask struct {
 	MinBridgeAmount *big.Int
 }
 
-func NewBridgeToEthTask() *BridgeToEthTask {
+func NewBridgeToEthTask(cfg *config.Config) *BridgeToEthTask {
 	ctx := context.Background()
-
-	cfg, err := config.Load()
-	if err != nil {
-		panic(err)
-	}
 
 	client := liteclient.NewConnectionPool()
 	if err := client.AddConnectionsFromConfigFile(cfg.LiteServersConfig); err != nil {
-		panic(err)
+		log.Fatalf("failed to create connection: %v", err)
 	}
 
 	api := ton.NewAPIClient(client).WithRetry(5)
@@ -41,23 +37,23 @@ func NewBridgeToEthTask() *BridgeToEthTask {
 	words := strings.Split(cfg.WalletMnemonic, " ")
 	wallet, err := wallet.FromSeed(api, words, wallet.V3R2)
 	if err != nil {
-		panic(err)
+		log.Fatalf("failed to create wallet: %v", err)
 	}
 
 	addr, err := address.ParseAddr(cfg.EthUsdtTreasuryAddress)
 	if err != nil {
-		panic(err)
+		log.Fatalf("failed to parse ethUsdtTreasury address: %v", err)
 	}
 	usdtTreasury := contracts.NewEthUsdtTreasuryContract(api, "ETH_USDT_TREASURY", addr)
 
 	usdtTreasuryData, err := usdtTreasury.GetData(ctx)
 	if err != nil {
-		panic(err)
+		log.Fatalf("failed to get data from ethUsdtTreasury: %v", err)
 	}
 
 	addr, err = address.ParseAddr(cfg.UsdtEthWalletAddress)
 	if err != nil {
-		panic(err)
+		log.Fatalf("failed to parse UsdtEthWalletAddress address: %v", err)
 	}
 	usdtWallet := contracts.NewUsdtWallet(api, "USDT_WALLET", addr)
 

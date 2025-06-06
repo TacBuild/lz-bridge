@@ -14,7 +14,7 @@ import (
 	"github.com/xssnick/tonutils-go/tvm/cell"
 )
 
-const USDT_TREASURY_BRIDGE_TO_TAC uint64 = 0x2906ab02
+const USDT_TREASURY_BRIDGE_TO_TAC uint64 = 0x1d350b50
 
 type TacUsdtTreasuryContract struct {
 	BaseContract
@@ -104,13 +104,13 @@ func (c *TacUsdtTreasuryContract) GetData(
 	}, nil
 }
 
-func (c *TacUsdtTreasuryContract) TriggerBridge(ctx context.Context, sender *wallet.Wallet, amount *big.Int, value *big.Int) error {
+func (c *TacUsdtTreasuryContract) TriggerBridge(ctx context.Context, sender *wallet.Wallet, usdtAmount *big.Int, value *big.Int) error {
 	fmt.Println("trigger bridge ton->tac")
 
 	body := cell.BeginCell().
 		MustStoreUInt(USDT_TREASURY_BRIDGE_TO_TAC, 32).
 		MustStoreUInt(rand.Uint64(), 64).
-		MustStoreBigCoins(amount).
+		MustStoreBigCoins(usdtAmount).
 		MustStoreMaybeRef(nil).
 		EndCell()
 

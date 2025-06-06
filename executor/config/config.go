@@ -14,7 +14,9 @@ type Config struct {
 	LiteServersConfig      string `envconfig:"LITE_SERVERS_CONFIG" required:"true"`
 	WalletMnemonic         string `envconfig:"WALLET_MNEMONIC" required:"true"`
 
-	MinBridgeAmount string `envconfig:"MIN_BRIDGE_AMOUNT" default:"100000000"`
+	MinBridgeAmount string `envconfig:"MIN_BRIDGE_AMOUNT" default:"1"`
+
+	TaskDelay uint64 `envconfig:"TASK_DELAY" default:"10"`
 }
 
 func Load() (*Config, error) {

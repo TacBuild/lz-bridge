@@ -1,0 +1,7 @@
+bridge_usdt_to_tac#1d350b50  query_id:uint64
+  usdt_amount:Coins
+  add_fee:(Maybe ^(
+    add_protocol_fee:Coins
+    add_jetton_transfer_ton_amount:Coins
+  ))
+= InternalMsgBody;

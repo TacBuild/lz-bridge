@@ -12,7 +12,7 @@
 
 ;; =============== CONSTS =============================
 ;; operation type
-const OPERATION::BRIDGE_USDT_TO_TAC = 0x2906ab02; ;; TODO calc that
+const OPERATION::BRIDGE_USDT_TO_TAC = 0x1d350b50;
 const ANYONE_OP::EXCESSES = 0xd53276db;
 
 ;; errors

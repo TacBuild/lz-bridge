@@ -14,7 +14,7 @@ import (
 	"github.com/xssnick/tonutils-go/tvm/cell"
 )
 
-const USDT_TREASURY_BRIDGE_TO_ETH uint64 = 0x2906ab02
+const USDT_TREASURY_BRIDGE_TO_ETH uint64 = 0x6e6c1865
 
 type EthUsdtTreasuryContract struct {
 	BaseContract
@@ -125,12 +125,13 @@ func (c *EthUsdtTreasuryContract) GetBalance(ctx context.Context) (*big.Int, err
 	return balance, nil
 }
 
-func (c *EthUsdtTreasuryContract) TriggerBridge(ctx context.Context, sender *wallet.Wallet, amount *big.Int, value *big.Int) error {
+func (c *EthUsdtTreasuryContract) TriggerBridge(ctx context.Context, sender *wallet.Wallet, usdtAmount *big.Int, value *big.Int) error {
 	fmt.Println("trigger bridge ton->eth")
+
 	body := cell.BeginCell().
 		MustStoreUInt(USDT_TREASURY_BRIDGE_TO_ETH, 32).
 		MustStoreUInt(rand.Uint64(), 64).
-		MustStoreBigCoins(amount).
+		MustStoreBigCoins(usdtAmount).
 		MustStoreMaybeRef(nil).
 		EndCell()
 

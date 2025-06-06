@@ -9,7 +9,7 @@
 
 ;; =============== CONSTS =============================
 ;; operation type
-const OPERATION::BRIDGE_USDT_TO_ETH = 0x2906ab02; ;; TODO calc that
+const OPERATION::BRIDGE_USDT_TO_ETH = 0x6e6c1865;
 const ANYONE_OP::EXCESSES = 0xd53276db;
 
 ;; errors

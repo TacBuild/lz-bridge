@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"executor/config"
 	"executor/tasks"
 	"log"
 	"time"
@@ -14,24 +15,27 @@ func main() {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	bridgeToTac := tasks.NewBridgeToTacTask()
-	bridgeToEth := tasks.NewBridgeToEthTask()
+	cfg, err := config.Load()
+	if err != nil {
+		log.Fatalf("Failed to load config: %v", err)
+	}
+
+	bridgeToTac := tasks.NewBridgeToTacTask(cfg)
+	bridgeToEth := tasks.NewBridgeToEthTask(cfg)
 
 	if err := bridgeToTac.Run(ctx); err != nil {
-		log.Printf("Initial run ton->tac failed: %v", err)
-		panic(err)
+		log.Fatalf("Initial run ton->tac failed: %v", err)
 	} else {
 		log.Printf("Initial run ton->tac executed successfully")
 	}
 
 	if err := bridgeToEth.Run(ctx); err != nil {
-		log.Printf("Initial run ton->eth failed: %v", err)
-		panic(err)
+		log.Fatalf("Initial run ton->eth failed: %v", err)
 	} else {
-		log.Printf("Initial run ton->tac executed successfully")
+		log.Printf("Initial run ton->eth executed successfully")
 	}
 
-	ticker := time.NewTicker(10 * time.Minute)
+	ticker := time.NewTicker(time.Duration(cfg.TaskDelay) * time.Minute)
 	defer ticker.Stop()
 
 	for {

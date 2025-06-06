@@ -24,7 +24,7 @@ export type TacUsdtTreasuryConfig = {
 };
 
 export const TacUsdtTreasuryOpCodes = {
-    bridge_usdt_to_tac: 0x2906ab02, // TODO fix that
+    bridge_usdt_to_tac: 0x1d350b50,
 };
 
 export const TacUsdtTreasuryErrors = {

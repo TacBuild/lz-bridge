@@ -829,15 +829,6 @@ describe('TacUsdtTreasury', () => {
                 ).toBe(logPayload.hash().toString());
 
                 expect(await usdtTreasuryJettonWallet.getJettonBalance()).toEqual(0n);
-
-                // const initBridgeTx = findTransactionRequired(bridgeTx.transactions, {
-                //     from: deployer.address,
-                //     to: usdtTreasury.address,
-                //     success: true,
-                // });
-
-                // printTxGasStats('USDT Bridge', initBridgeTx);
-                // await calculateFeesData(blockchain, usdtTreasury, bridgeTx, initBalance); // if want to calculate usdtTreasury gas exactly
         });
 
         it('TAC-UT-2.4: successfully bridge usdt, balance_error on usdt Wallet', async () => {

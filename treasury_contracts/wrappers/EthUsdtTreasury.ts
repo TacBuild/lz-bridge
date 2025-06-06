@@ -25,7 +25,7 @@ export type EthUsdtTreasuryConfig = {
 };
 
 export const EthUsdtTreasuryOpCodes = {
-    bridge_usdt_to_eth: 0x2906ab02, // TODO fix that
+    bridge_usdt_to_eth: 0x6e6c1865,
 };
 
 export const EthUsdtTreasuryErrors = {
@@ -54,6 +54,10 @@ export function buildEthUsdtTreasuryData(config: EthUsdtTreasuryConfig): Cell {
 
 export class EthUsdtTreasury implements Contract {
     constructor(readonly address: Address, readonly init?: { code: Cell; data: Cell }) {}
+
+    static open(address: Address): EthUsdtTreasury {
+        return new EthUsdtTreasury(address);
+    }
 
     static createFromConfig(config: EthUsdtTreasuryConfig, code: Cell, workchain = 0): EthUsdtTreasury {
         const data = buildEthUsdtTreasuryData(config);
