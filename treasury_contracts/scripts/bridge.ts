@@ -107,7 +107,7 @@ export async function sendJettonBridgeTransfer(
 }
 
 export async function run(provider: NetworkProvider) {
-    const jettonWalletAddress = Address.parse("EQCdPG4yzLb5cy-6cx0NPpSjuMRyYKEqcfMXfaFo_ulNA0gn");
+    const jettonWalletAddress = Address.parse("");
     const oAppAddress = Address.parse("EQAXByU5SqVhNvvSfQzjHYqY4PiucqTSN5td3oPiEaLV-p0-");
     const dstEvm = "0x84Cb8Be69037069E35147C9C18350Ed8895877FD";
 
