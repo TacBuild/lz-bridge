@@ -58,7 +58,7 @@ Two bridge directions are implemented:
 
 ---
 
-MIT License
+### MIT License
 
 Copyright (c) 2024 TAC
 
