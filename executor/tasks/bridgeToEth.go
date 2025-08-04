@@ -17,11 +17,10 @@ import (
 )
 
 type BridgeToEthTask struct {
-	UsdtTreasury    *contracts.EthUsdtTreasuryContract
-	UsdtWallet      *contracts.UsdtWallet
-	ExecutorWallet  *wallet.Wallet
-	TreasuryData    *entity.EthUsdtTreasuryData
-	MinBridgeAmount *big.Int
+	UsdtTreasury   *contracts.EthUsdtTreasuryContract
+	UsdtWallet     *contracts.UsdtWallet
+	ExecutorWallet *wallet.Wallet
+	TreasuryData   *entity.EthUsdtTreasuryData
 }
 
 func NewBridgeToEthTask(cfg *config.Config) *BridgeToEthTask {
@@ -57,14 +56,11 @@ func NewBridgeToEthTask(cfg *config.Config) *BridgeToEthTask {
 	}
 	usdtWallet := contracts.NewUsdtWallet(api, "USDT_WALLET", addr)
 
-	minBridgeAmount, _ := new(big.Int).SetString(cfg.MinBridgeAmount, 10)
-
 	return &BridgeToEthTask{
-		UsdtTreasury:    usdtTreasury,
-		UsdtWallet:      usdtWallet,
-		ExecutorWallet:  wallet,
-		TreasuryData:    usdtTreasuryData,
-		MinBridgeAmount: minBridgeAmount,
+		UsdtTreasury:   usdtTreasury,
+		UsdtWallet:     usdtWallet,
+		ExecutorWallet: wallet,
+		TreasuryData:   usdtTreasuryData,
 	}
 }
 
@@ -74,8 +70,7 @@ func (t *BridgeToEthTask) Run(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
-
-	if usdtBalance.Cmp(t.MinBridgeAmount) < 0 {
+	if usdtBalance.Cmp(t.TreasuryData.MinBridgeAmount) < 0 {
 		return nil
 	}
 

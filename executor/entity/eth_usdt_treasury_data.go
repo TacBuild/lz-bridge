@@ -13,7 +13,8 @@ type EthUsdtTreasuryData struct {
 	OAppAddress           *address.Address `json:"oAppAddress"`
 	DstEvmAddress         *big.Int         `json:"dstEvmAddress"`
 	EthEid                *big.Int         `json:"ethEid"`
-	MaxBridgeAmount       *big.Int         `json:"tonProtocolFee"`
+	MaxBridgeAmount       *big.Int         `json:"maxBridgeAmount"`
+	MinBridgeAmount       *big.Int         `json:"minBridgeAmount"`
 	NativeFee             *big.Int         `json:"nativeFee"`
 	EstimatedGasCost      *big.Int         `json:"estimatedGasCost"`
 	JettonTransferGasCost *big.Int         `json:"jettonTransferGasCost"`

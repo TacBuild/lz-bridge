@@ -16,6 +16,7 @@ const ANYONE_OP::EXCESSES = 0xd53276db;
 const ERROR::NOT_ENOUGH_MSG_VALUE = 100;
 const ERROR::NOT_ENOUGH_MSG_VALUE_ADD_FEE = 101;
 const ERROR::BRIDGE_AMOUNT_TOO_BIG = 102;
+const ERROR::BRIDGE_AMOUNT_TOO_LITTLE = 103;
 
 global slice jetton_master_address;
 global cell jetton_wallet_code;
@@ -23,6 +24,7 @@ global slice oApp_address;
 global int dst_evm_address;
 global int eth_eid;
 global int max_bridge_amount;
+global int min_bridge_amount;
 global int native_fee;
 global int estimated_gas_cost;
 global int jetton_transfer_gas_cost;
@@ -40,6 +42,7 @@ global int treasury_fee;
 
     slice fee_data_slice = ds~load_ref().begin_parse();
     max_bridge_amount = fee_data_slice~load_coins();
+    min_bridge_amount = fee_data_slice~load_coins();
     native_fee = fee_data_slice~load_coins();
     estimated_gas_cost = fee_data_slice~load_coins();
     jetton_transfer_gas_cost = fee_data_slice~load_coins();
@@ -56,6 +59,7 @@ global int treasury_fee;
             .store_uint(dst_evm_address, 256)
             .store_ref(begin_cell()
                 .store_coins(max_bridge_amount)
+                .store_coins(min_bridge_amount)
                 .store_coins(native_fee)
                 .store_coins(estimated_gas_cost)
                 .store_coins(jetton_transfer_gas_cost)
@@ -95,6 +99,7 @@ global int treasury_fee;
     if (op == OPERATION::BRIDGE_USDT_TO_ETH) {
         int usdt_amount = in_msg_body~load_coins();
         throw_unless(ERROR::BRIDGE_AMOUNT_TOO_BIG, usdt_amount <= max_bridge_amount);
+        throw_unless(ERROR::BRIDGE_AMOUNT_TOO_LITTLE, usdt_amount >= min_bridge_amount);
 
         cell add_fee = in_msg_body~load_maybe_ref();
         int add_native_fee = 0;
@@ -143,6 +148,7 @@ global int treasury_fee;
         dst_evm_address,
         eth_eid,
         max_bridge_amount,
+        min_bridge_amount,
         native_fee,
         estimated_gas_cost,
         jetton_transfer_gas_cost,

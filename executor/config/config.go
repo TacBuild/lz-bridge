@@ -16,7 +16,7 @@ type Config struct {
 
 	MinBridgeAmount string `envconfig:"MIN_BRIDGE_AMOUNT" default:"1"`
 
-	TaskDelay uint64 `envconfig:"TASK_DELAY" default:"10"`
+	TaskDelay uint64 `envconfig:"TASK_DELAY" default:"1"`
 }
 
 func Load() (*Config, error) {

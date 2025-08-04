@@ -76,22 +76,27 @@ func (c *EthUsdtTreasuryContract) GetData(
 		return nil, err
 	}
 
-	nativeFee, err := result.Int(6)
+	minBridgeAmount, err := result.Int(6)
 	if err != nil {
 		return nil, err
 	}
 
-	estimatedGasCost, err := result.Int(7)
+	nativeFee, err := result.Int(7)
 	if err != nil {
 		return nil, err
 	}
 
-	jettonTransferGasCost, err := result.Int(8)
+	estimatedGasCost, err := result.Int(8)
 	if err != nil {
 		return nil, err
 	}
 
-	treasuryFee, err := result.Int(9)
+	jettonTransferGasCost, err := result.Int(9)
+	if err != nil {
+		return nil, err
+	}
+
+	treasuryFee, err := result.Int(10)
 	if err != nil {
 		return nil, err
 	}
@@ -102,6 +107,7 @@ func (c *EthUsdtTreasuryContract) GetData(
 		OAppAddress:           oAppAddr,
 		EthEid:                ethEid,
 		MaxBridgeAmount:       maxBridgeAmount,
+		MinBridgeAmount:       minBridgeAmount,
 		DstEvmAddress:         dstEvmAddress,
 		NativeFee:             nativeFee,
 		EstimatedGasCost:      estimatedGasCost,
