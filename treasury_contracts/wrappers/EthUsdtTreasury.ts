@@ -18,6 +18,7 @@ export type EthUsdtTreasuryConfig = {
     dstEvmAddress: bigint;
     ethEid: number;
     maxBridgeAmount: bigint;
+    minBridgeAmount: bigint;
     nativeFee: number;
     estimatedGasCost: number;
     jettonTransferGasCost: number;
@@ -33,6 +34,7 @@ export const EthUsdtTreasuryErrors = {
     notEnoughMsgValue: 100,
     notEnoughMsgValueAddFee: 101,
     bridgeAmountTooBig: 102,
+    bridgeAmountTooLittle: 103,
 };
 
 export function buildEthUsdtTreasuryData(config: EthUsdtTreasuryConfig): Cell {
@@ -44,6 +46,7 @@ export function buildEthUsdtTreasuryData(config: EthUsdtTreasuryConfig): Cell {
         .storeUint(config.dstEvmAddress, 256)
         .storeRef(beginCell()
                 .storeCoins(config.maxBridgeAmount)
+                .storeCoins(config.minBridgeAmount)
                 .storeCoins(toNano(config.nativeFee.toFixed(9)))
                 .storeCoins(toNano(config.estimatedGasCost.toFixed(9)))
                 .storeCoins(toNano(config.jettonTransferGasCost.toFixed(9)))
@@ -117,6 +120,7 @@ export class EthUsdtTreasury implements Contract {
             dstEvmAddress: result.stack.readBigNumber(),
             ethEid: result.stack.readNumber(),
             maxBridgeAmount: result.stack.readBigNumber(),
+            minBridgeAmount: result.stack.readBigNumber(),
             nativeFee: Number(fromNano(result.stack.readNumber())),
             estimatedGasCost: Number(fromNano(result.stack.readNumber())),
             treasuryFee: Number(fromNano(result.stack.readNumber()))

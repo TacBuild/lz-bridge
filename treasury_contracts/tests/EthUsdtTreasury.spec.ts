@@ -58,6 +58,7 @@ describe('EthUsdtTreasury', () => {
     let dstEvmAddress: string;
     let ethEid: number;
     let maxBridgeAmount: bigint;
+    let minBridgeAmount: bigint;
     let nativeFee: number;
     let estimatedGasCost: number;
     let jettonTransferGasCost: number;
@@ -86,6 +87,7 @@ describe('EthUsdtTreasury', () => {
             dstEvmAddress: BigInt(dstEvmAddress),
             ethEid,
             maxBridgeAmount,
+            minBridgeAmount,
             nativeFee,
             estimatedGasCost,
             jettonTransferGasCost,
@@ -153,6 +155,7 @@ describe('EthUsdtTreasury', () => {
         jettonTransferGasCost = 1;
         treasuryFee = 1;
         maxBridgeAmount = 1_000_000_000_000n;
+        minBridgeAmount = 1_000_000n;
         nativeFee = 100;
         estimatedGasCost = 100;
 
@@ -368,13 +371,13 @@ describe('EthUsdtTreasury', () => {
             await deployLayerZeroMock();
             await deployUsdtTreasury();
 
-            const initialJettonBalance = toNano(100);
+            const initialJettonBalance = minBridgeAmount;
             await mintUsdtToAddress(usdtTreasury.address, initialJettonBalance);
             const usdtTreasuryJettonWallet = await usdtUserWallet(usdtTreasury.address);
             expect(await usdtTreasuryJettonWallet.getJettonBalance()).toEqual(initialJettonBalance);
 
             const initBalance = (await blockchain.getContract(usdtTreasury.address)).balance;
-            const birdgeAmount = 100n;
+            const birdgeAmount = minBridgeAmount;
             let neededValue = toNano(treasuryFee) + toNano(jettonTransferGasCost) - 1n;
 
             const bridgeTx = await usdtTreasury.sendBridgeUsdt(deployer.getSender(), neededValue, {
