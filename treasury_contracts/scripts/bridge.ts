@@ -22,7 +22,7 @@ export function buildOFTSendPayload({
     nativeFee,
     zroFee = 0n,
     extraOptions = beginCell().endCell(),
-    composeMessage = beginCell().storeUint(0, 1).endCell(),
+    composeMessage = beginCell().endCell(),
 }: {
         dstEid: number;
         dstEvmAddress: string;
@@ -78,7 +78,7 @@ export async function sendJettonBridgeTransfer(
     oAppAddress: Address,
     dstEvmAddress: string,
     jettonAmount: bigint,
-    nativeFee: bigint = toNano('0.5'),
+    nativeFee: bigint = toNano('1.5'),
     estimatedGasCost: bigint = toNano('0.5')
 ) {
     const oftSend = buildOFTSendPayload({
@@ -107,9 +107,9 @@ export async function sendJettonBridgeTransfer(
 }
 
 export async function run(provider: NetworkProvider) {
-    const jettonWalletAddress = Address.parse("");
-    const oAppAddress = Address.parse("EQAXByU5SqVhNvvSfQzjHYqY4PiucqTSN5td3oPiEaLV-p0-");
-    const dstEvm = "0x84Cb8Be69037069E35147C9C18350Ed8895877FD";
+    const jettonWalletAddress = Address.parse("EQDWsXVY9jTiO0sXoPdUZ5UIixUfAvUGlP26dzEiuQgUt-D9");
+    const oAppAddress = Address.parse("EQAd31gAUhdO0d0NZsNb_cGl_Maa9PSuNhVLE9z8bBSjX6Gq");
+    const dstEvm = "0xBC5787587928fA5B4f2Dd2C184704d547754cb4A";
 
     await sendJettonBridgeTransfer(
       provider.sender(),

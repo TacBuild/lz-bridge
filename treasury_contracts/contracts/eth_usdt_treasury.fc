@@ -118,7 +118,7 @@ global int treasury_fee;
         int new_jetton_transfer_gas_cost = jetton_transfer_gas_cost + add_jetton_transfer_gas_cost;
 
         slice jetton_wallet_address = calculate_user_usdt_jetton_wallet_address(my_address(), jetton_master_address, jetton_wallet_code);
-        cell lz_payload = OFTSend::New(eth_eid, dst_evm_address, 0, new_native_fee, 0, begin_cell().end_cell(), begin_cell().store_uint(0, 1).end_cell());
+        cell lz_payload = OFTSend::New(eth_eid, dst_evm_address, 0, new_native_fee, 0, begin_cell().end_cell(), begin_cell().end_cell());
 
         throw_unless(ERROR::NOT_ENOUGH_MSG_VALUE_ADD_FEE, msg_value >= add_native_fee + add_estimated_gas_cost + new_jetton_transfer_gas_cost + treasury_fee);
         throw_unless(ERROR::NOT_ENOUGH_MSG_VALUE, my_balance >= new_native_fee + new_estimated_gas_cost + new_jetton_transfer_gas_cost + treasury_fee);

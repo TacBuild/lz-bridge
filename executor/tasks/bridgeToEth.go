@@ -17,10 +17,12 @@ import (
 )
 
 type BridgeToEthTask struct {
-	UsdtTreasury   *contracts.EthUsdtTreasuryContract
-	UsdtWallet     *contracts.UsdtWallet
-	ExecutorWallet *wallet.Wallet
-	TreasuryData   *entity.EthUsdtTreasuryData
+	LzEndpoint      *contracts.LzEndpointContract
+	UsdtTreasury    *contracts.EthUsdtTreasuryContract
+	UsdtWallet      *contracts.UsdtWallet
+	ExecutorWallet  *wallet.Wallet
+	TreasuryData    *entity.EthUsdtTreasuryData
+	MinBridgeAmount *big.Int
 }
 
 func NewBridgeToEthTask(cfg *config.Config) *BridgeToEthTask {
@@ -56,11 +58,21 @@ func NewBridgeToEthTask(cfg *config.Config) *BridgeToEthTask {
 	}
 	usdtWallet := contracts.NewUsdtWallet(api, "USDT_WALLET", addr)
 
+	addr, err = address.ParseAddr(cfg.LzEndpointAddress)
+	if err != nil {
+		log.Fatalf("failed to parse LzEndpoint address: %v", err)
+	}
+	lzEndpoint := contracts.NewLzEndpointContract(api, "LZ_ENDPOINT", addr)
+
+	minBridgeAmount, _ := new(big.Int).SetString(cfg.MinBridgeAmount, 10)
+
 	return &BridgeToEthTask{
-		UsdtTreasury:   usdtTreasury,
-		UsdtWallet:     usdtWallet,
-		ExecutorWallet: wallet,
-		TreasuryData:   usdtTreasuryData,
+		LzEndpoint:      lzEndpoint,
+		UsdtTreasury:    usdtTreasury,
+		UsdtWallet:      usdtWallet,
+		ExecutorWallet:  wallet,
+		TreasuryData:    usdtTreasuryData,
+		MinBridgeAmount: minBridgeAmount,
 	}
 }
 
@@ -76,6 +88,18 @@ func (t *BridgeToEthTask) Run(ctx context.Context) error {
 
 	if usdtBalance.Cmp(t.TreasuryData.MaxBridgeAmount) >= 1 {
 		usdtBalance = t.TreasuryData.MaxBridgeAmount
+	}
+
+	ethCredit, err := t.LzEndpoint.GetEthCredit(ctx)
+	if err != nil {
+		return err
+	}
+	if usdtBalance.Cmp(ethCredit) >= 1 {
+		usdtBalance = ethCredit
+	}
+
+	if usdtBalance.Cmp(t.MinBridgeAmount) < 0 {
+		return nil
 	}
 
 	tonBalance, err := t.UsdtTreasury.GetBalance(ctx)

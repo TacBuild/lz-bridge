@@ -3,6 +3,7 @@
     "version": "0.0.1",
     "scripts": {
         "start": "blueprint run",
+        "verify": "blueprint verify",
         "build": "blueprint build",
         "build:all": "blueprint build --all",
         "test": "jest --verbose",
@@ -27,6 +28,7 @@
     "dependencies": {
         "@layerzerolabs/layerzero-v2-ton": "^3.0.98",
         "@layerzerolabs/lz-ton-sdk-v2": "^3.0.97",
+        "blueprint": "^2.1.5",
         "ton-crypto": "^3.2.0"
     }
 }
