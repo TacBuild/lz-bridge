@@ -441,7 +441,7 @@ describe('TacUsdtTreasury', () => {
                 exitCode: 0,
             });
 
-                        
+
             expect(bridgeTx.transactions).toHaveTransaction({
                 from: jettonProxy.address,
                 body: beginCell()

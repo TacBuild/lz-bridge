@@ -59,59 +59,63 @@ export async function run(provider: NetworkProvider) {
     const libJettonPrep = beginCell().storeUint(2, 8).storeBuffer(jettonCodeRaw.hash()).endCell();
     const usdtJettonWalletCode = new Cell({ exotic: true, bits: libJettonPrep.bits, refs: libJettonPrep.refs });
 
-    const code = {
-        usdtJettonMinter: await compile('UsdtJettonMinter'),
-        tacUsdtTreasury: await compile('TacUsdtTreasury'),
-        ethUsdtTreasury: await compile('EthUsdtTreasury'),
-        usdtJettonWallet: usdtJettonWalletCode,
-    };
+    console.log("usdt jetton wallet code:", usdtJettonWalletCode.toBoc().toString('hex'));
 
-    console.log('deploying ETH usdt treasury');
-    const nativeFee = 40;
-    const estimatedGasCost = 10;
-    const jettonTransferGasCost = 1;
-    const treasuryFee = 0.5;
+    console.log("usdt jetton wallet code:", usdtJettonWalletCode.toBoc().toString('base64'));
 
-    const ethUsdtTreasuryConfig: EthUsdtTreasuryConfig = {
-        jettonMaster: Address.parse("EQCxE6mUtQJKFnGfaROTKOt1lZbDiiX1kCixRv7Nw2Id_sDs"),
-        jettonWalletCode: usdtJettonWalletCode,
-        oAppAddress: Address.parse("EQAXByU5SqVhNvvSfQzjHYqY4PiucqTSN5td3oPiEaLV-p0-"), 
-        dstEvmAddress: BigInt(evmTargetAdress),
-        ethEid: 30101,
-        maxBridgeAmount: 10_000_000_000_000n,
-        minBridgeAmount: 1_000_000n,
-        nativeFee,
-        estimatedGasCost,
-        jettonTransferGasCost,
-        treasuryFee,
-    }
+    // const code = {
+    //     usdtJettonMinter: await compile('UsdtJettonMinter'),
+    //     tacUsdtTreasury: await compile('TacUsdtTreasury'),
+    //     ethUsdtTreasury: await compile('EthUsdtTreasury'),
+    //     usdtJettonWallet: usdtJettonWalletCode,
+    // };
 
-    const ethUsdtTreasury = provider.open(EthUsdtTreasury.createFromConfig(ethUsdtTreasuryConfig, code.ethUsdtTreasury));
-    await ethUsdtTreasury.sendDeploy(provider.sender(), toNano(nativeFee + estimatedGasCost));
-    await provider.waitForDeploy(ethUsdtTreasury.address);
-    await sleep(5 * 1000);
+    // console.log('deploying ETH usdt treasury');
+    // const nativeFee = 25;
+    // const estimatedGasCost = 0.5;
+    // const jettonTransferGasCost = 0.1;
+    // const treasuryFee = 0.1;
 
-    console.log('deploying TAC usdt treasury');
+    // const ethUsdtTreasuryConfig: EthUsdtTreasuryConfig = {
+    //     jettonMaster: Address.parse("EQCxE6mUtQJKFnGfaROTKOt1lZbDiiX1kCixRv7Nw2Id_sDs"),
+    //     jettonWalletCode: usdtJettonWalletCode,
+    //     oAppAddress: Address.parse("EQAd31gAUhdO0d0NZsNb_cGl_Maa9PSuNhVLE9z8bBSjX6Gq"), 
+    //     dstEvmAddress: BigInt(evmTargetAdress),
+    //     ethEid: 30101,
+    //     maxBridgeAmount: 10_000_000_000_000n,
+    //     minBridgeAmount: 1_000_000n,
+    //     nativeFee,
+    //     estimatedGasCost,
+    //     jettonTransferGasCost,
+    //     treasuryFee,
+    // }
 
-    const cclJettonProxy = 'EQAChAswsPNsU2k3A5ZDO_cfhWknCGS6WMG2Jz15USMwxMdw';
-    const protocolFee = 0.5;
-    const tacExecutorsFee = 3;
-    const tonExecutorsFee = 1;
-    const jettonTransferTonAmount = 0.5;
+    // const ethUsdtTreasury = provider.open(EthUsdtTreasury.createFromConfig(ethUsdtTreasuryConfig, code.ethUsdtTreasury));
+    // await ethUsdtTreasury.sendDeploy(provider.sender(), toNano(nativeFee + estimatedGasCost));
+    // await provider.waitForDeploy(ethUsdtTreasury.address);
+    // await sleep(5 * 1000);
 
-    const tacUsdtTreasuryConfig: TacUsdtTreasuryConfig = {
-        evmData: evmData,
-        cclJettonProxy: Address.parse(cclJettonProxy),
-        jettonMaster: Address.parse("EQCxE6mUtQJKFnGfaROTKOt1lZbDiiX1kCixRv7Nw2Id_sDs"),
-        jettonWalletCode: usdtJettonWalletCode,
-        protocolFee,
-        tacExecutorsFee,
-        tonExecutorsFee,
-        jettonTransferTonAmount,
-        treasuryFee,
-    }
-    const tacUsdtTreasury = provider.open(TacUsdtTreasury.createFromConfig(tacUsdtTreasuryConfig, code.tacUsdtTreasury));
-    await tacUsdtTreasury.sendDeploy(provider.sender(), toNano('0.1'));
-    await provider.waitForDeploy(tacUsdtTreasury.address);
-    await sleep(5 * 1000);
+    // console.log('deploying TAC usdt treasury');
+
+    // const cclJettonProxy = 'EQAChAswsPNsU2k3A5ZDO_cfhWknCGS6WMG2Jz15USMwxMdw';
+    // const protocolFee = 0.5;
+    // const tacExecutorsFee = 3;
+    // const tonExecutorsFee = 1;
+    // const jettonTransferTonAmount = 0.5;
+
+    // const tacUsdtTreasuryConfig: TacUsdtTreasuryConfig = {
+    //     evmData: evmData,
+    //     cclJettonProxy: Address.parse(cclJettonProxy),
+    //     jettonMaster: Address.parse("EQCxE6mUtQJKFnGfaROTKOt1lZbDiiX1kCixRv7Nw2Id_sDs"),
+    //     jettonWalletCode: usdtJettonWalletCode,
+    //     protocolFee,
+    //     tacExecutorsFee,
+    //     tonExecutorsFee,
+    //     jettonTransferTonAmount,
+    //     treasuryFee,
+    // }
+    // const tacUsdtTreasury = provider.open(TacUsdtTreasury.createFromConfig(tacUsdtTreasuryConfig, code.tacUsdtTreasury));
+    // await tacUsdtTreasury.sendDeploy(provider.sender(), toNano('0.1'));
+    // await provider.waitForDeploy(tacUsdtTreasury.address);
+    // await sleep(5 * 1000);
 }

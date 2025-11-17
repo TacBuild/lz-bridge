@@ -7,6 +7,7 @@ import (
 )
 
 type Config struct {
+	LzEndpointAddress      string `envconfig:"LZ_ENDPOINT_ADDRESS" required:"true"`
 	EthUsdtTreasuryAddress string `envconfig:"ETH_USDT_TREASURY_ADDRESS" required:"true"`
 	TacUsdtTreasuryAddress string `envconfig:"TAC_USDT_TREASURY_ADDRESS" required:"true"`
 	UsdtEthWalletAddress   string `envconfig:"USDT_ETH_WALLET_ADDRESS" required:"true"`
@@ -14,7 +15,7 @@ type Config struct {
 	LiteServersConfig      string `envconfig:"LITE_SERVERS_CONFIG" required:"true"`
 	WalletMnemonic         string `envconfig:"WALLET_MNEMONIC" required:"true"`
 
-	MinBridgeAmount string `envconfig:"MIN_BRIDGE_AMOUNT" default:"1"`
+	MinBridgeAmount string `envconfig:"MIN_BRIDGE_AMOUNT" default:"5000000000"`
 
 	TaskDelay uint64 `envconfig:"TASK_DELAY" default:"1"`
 }
